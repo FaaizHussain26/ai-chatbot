@@ -10,7 +10,7 @@ export const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
 
   const renderText = (textSegment: string): React.ReactNode[] => {
     const parts: React.ReactNode[] = [];
-    const combinedRegex = /(\*\*([^*]+)\*\*|\$\d+(?:\.\d{2})?)/g;
+    const combinedRegex = /(\*\*([^*]+)\*\*|~~([^~]+)~~|\$[\d,]+(?:\.\d{2})?)/g;
     let lastIndex = 0;
     let match: RegExpExecArray | null;
 
@@ -22,15 +22,21 @@ export const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
         parts.push(textSegment.slice(lastIndex, matchStart));
       }
 
-      const fullMatch = match[1];
+      const fullMatch = match[0];
 
       if (fullMatch.startsWith("**") && fullMatch.endsWith("**")) {
         parts.push(
           <strong key={`bold-${matchStart}`}>{fullMatch.slice(2, -2)}</strong>
         );
-      } else if (fullMatch.startsWith("$")) {
+      } else if (fullMatch.startsWith("~~") && fullMatch.endsWith("~~")) {
         parts.push(
-          <strong key={`price-${matchStart}`} className="text-green-700">
+          <del key={`strike-${matchStart}`} className="text-gray-500">
+            {fullMatch.slice(2, -2)}
+          </del>
+        );
+      } else if (fullMatch.startsWith("$") || fullMatch.includes("US $")) {
+        parts.push(
+          <strong key={`price-${matchStart}`} className="text-green-400">
             {fullMatch}
           </strong>
         );
@@ -124,7 +130,9 @@ export const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
   };
 
   const lines = text.split(/\n+/);
-  const bulletLines = lines.filter((line) => line.startsWith("- "));
+  const bulletLines = lines.filter(
+    (line) => line.startsWith("- ") && !line.startsWith("- Link:")
+  );
   const nonBulletLines = lines.filter((line) => !line.startsWith("- "));
 
   return (
