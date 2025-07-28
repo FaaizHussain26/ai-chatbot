@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { User } from "lucide-react";
 import { ActionButtons } from "./action-buttons";
 import { ChatOptions } from "./chat-options";
+import { LinkifyText } from "../linkify";
 
 interface ChatOption {
   id: string;
@@ -37,9 +38,9 @@ export function MessageItem({
       className={cn(
         "flex items-start gap-3 rounded-lg p-4",
         message.role === "user"
-          ? "ml-auto max-w-[80%] bg-[#F1F8FA]"
-          : `mr-auto max-w-[90%] ${
-              message.id === "welcome" ? "bg-transparent" : "bg-[#104D96]"
+          ? "ml-auto max-w-[90%] bg-[#F1F8FA]"
+          : `mr-auto max-w-[100%] ${
+              message.id === "welcome" ? "bg-[#F1F8FA]" : "bg-[#104d96]"
             }`
       )}
     >
@@ -57,7 +58,7 @@ export function MessageItem({
           <div
             className={`text-sm whitespace-pre-wrap text-[#104D96] mt-[8px]`}
           >
-            {message.content}
+            <LinkifyText text={message.content} />
           </div>
         ) : (
           <div
@@ -65,7 +66,7 @@ export function MessageItem({
               message.id === "welcome" ? "text-[#104D96]" : "text-white"
             } mt-[8px]`}
           >
-            {message.content}
+            <LinkifyText text={message.content} />
           </div>
         )}
 

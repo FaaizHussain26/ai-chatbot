@@ -23,7 +23,7 @@ interface Message {
 }
 
 interface MessagesCardProps {
-  status: "submitted" | "streaming" | "ready" | "error";
+  loading: boolean;
   inModal: boolean;
   messages: Message[];
   onOptionSelect?: (option: ChatOption) => void;
@@ -33,7 +33,7 @@ interface MessagesCardProps {
 }
 
 const MessagesCard: React.FC<MessagesCardProps> = ({
-  status,
+  loading,
   inModal,
   messages,
   onOptionSelect,
@@ -46,7 +46,7 @@ const MessagesCard: React.FC<MessagesCardProps> = ({
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, status]);
+  }, [messages, loading]);
 
   return (
     <Card
@@ -67,7 +67,7 @@ const MessagesCard: React.FC<MessagesCardProps> = ({
             />
           ))}
 
-          {status === "streaming" && <TypingIndicator />}
+          {loading && <TypingIndicator />}
 
           <div ref={messagesEndRef} />
         </div>

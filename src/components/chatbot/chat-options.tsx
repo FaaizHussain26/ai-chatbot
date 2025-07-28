@@ -19,7 +19,7 @@ export function ChatOptions({ options, onOptionSelect }: ChatOptionsProps) {
         <Button
           key={option.id}
           variant="link"
-          className="justify-start text-left h-auto p-3 whitespace-normal bg-[#104D96]"
+          className="justify-start text-left h-auto p-3 whitespace-normal bg-[#FF6600]"
           onClick={() => onOptionSelect(option)}
         >
           <span className="flex items-center gap-2 w-full">

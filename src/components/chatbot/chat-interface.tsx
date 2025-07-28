@@ -1,45 +1,38 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import type React from "react";
 import { useChat } from "@ai-sdk/react";
 import ChatForm from "./chat-form";
 import MessagesCard from "./messages-card";
 import { chatApiMiddleware } from "@/utils/api";
-import {
-  ChatOption,
-  CONSULTATION_MESSAGE,
-  ESTIMATE_MESSAGE,
-  INITIAL_MESSAGE,
-} from "@/utils/constants";
+import { ChatOption, INITIAL_MESSAGE } from "@/utils/constants";
+import { useState } from "react";
 
 interface ChatInterfaceProps {
   inModal?: boolean;
 }
 
 export default function ChatInterface({ inModal = false }: ChatInterfaceProps) {
-  const { messages, input, handleInputChange, setMessages, status } = useChat({
+  const [loading, setLoading] = useState(false);
+  const { messages, input, handleInputChange, setMessages } = useChat({
     initialMessages: INITIAL_MESSAGE,
     api: "/api/chat",
-    onResponse(response) {
-      console.log(response, "response");
+    onResponse() {
+      setLoading(false);
     },
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!input.trim()) return;
+
+    setLoading(true);
 
     const userMessage = {
       id: Date.now().toString(),
       role: "user",
-      content: input,
+      content: input.trim(),
     };
-
-    // @ts-ignore
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-
+    //@ts-ignore
+    setMessages((prev) => [...prev, userMessage]);
     handleInputChange({ target: { value: "" } } as any);
 
     try {
@@ -47,10 +40,11 @@ export default function ChatInterface({ inModal = false }: ChatInterfaceProps) {
         ...messages,
         userMessage,
       ]);
-
-      setMessages((prevMessages) => [...prevMessages, assistantResponse]);
-    } catch (error) {
-      console.error("Error submitting message:", error);
+      setMessages((prev) => [...prev, assistantResponse]);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.error("Error:", err);
     }
   };
 
@@ -60,50 +54,29 @@ export default function ChatInterface({ inModal = false }: ChatInterfaceProps) {
       role: "user",
       content: option.text,
     };
-
-    // @ts-ignore
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    //@ts-ignore
+    setMessages((prev) => [...prev, userMessage]);
+    setLoading(true);
 
     try {
-      const contextualMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "user",
-        content: `User selected option: ${option.value} - ${option.text}. Please provide appropriate follow-up questions and service recommendations based on this selection for The SciTech & IP Law Firm.`,
-      };
-
       const assistantResponse = await chatApiMiddleware([
         ...messages,
         userMessage,
-        contextualMessage,
+        {
+          id: (Date.now() + 1).toString(),
+          role: "user",
+          content: `User selected ${option.value}`,
+        },
       ]);
-
-      const responseWithActions = {
-        ...assistantResponse,
-        showEstimateButton: option.value === "guidance",
-        showConsultationButton: option.value === "pdf" ? false : true,
-        showPDFButton: option.value === "pdf",
-      };
-
-      setMessages((prevMessages) => [...prevMessages, responseWithActions]);
-    } catch (error) {
-      console.error("Error handling option selection:", error);
+      setMessages((prev) => [...prev, assistantResponse]);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.error("Option handler error:", err);
     }
   };
 
-  const handleEstimateRequest = () => {
-    // @ts-ignore
-    setMessages((prevMessages) => [...prevMessages, ESTIMATE_MESSAGE]);
-
-    console.log("Redirecting to estimate form...");
-  };
-
-  const handleConsultationRequest = () => {
-    // @ts-ignore
-    setMessages((prevMessages) => [...prevMessages, CONSULTATION_MESSAGE]);
-
-    console.log("Opening scheduling system...");
-  };
-
+  console.log(loading, "messages");
   return (
     <div
       className={`flex flex-col ${
@@ -113,13 +86,10 @@ export default function ChatInterface({ inModal = false }: ChatInterfaceProps) {
       }`}
     >
       <MessagesCard
-        calendlyUrl="https://calendly.com/ahussain-digitalauxilius/30min"
-        status={status}
+        loading={loading}
         inModal={inModal}
         messages={messages}
         onOptionSelect={handleOptionSelect}
-        onEstimateRequest={handleEstimateRequest}
-        onConsultationRequest={handleConsultationRequest}
       />
       <ChatForm
         input={input}

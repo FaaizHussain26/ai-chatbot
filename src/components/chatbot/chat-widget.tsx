@@ -11,9 +11,10 @@ export default function ChatWidget() {
       <Button
         onClick={() => setIsOpen(!isOpen)}
         size="icon"
-        className="h-14 w-14 rounded-full fixed bottom-6 right-6 shadow-lg z-50 bg-[#104D96]"
+        variant="ghost"
+        className="h-14 w-14 rounded-full fixed bottom-6 right-6 shadow-lg z-50 bg-[#FF6600]"
       >
-        <img src="/assets/logo.png" alt="logo" width={44} height={44} />
+        <img src="/assets/logo.webp" alt="logo" width={44} height={44} />
       </Button>
 
       <AnimatePresence>
@@ -26,11 +27,11 @@ export default function ChatWidget() {
             className="fixed bottom-24 right-6 sm:right-8 w-[90vw] sm:w-[400px] md:w-[450px] h-[600px] 
                       rounded-lg shadow-xl overflow-hidden z-40 bg-white border border-gray-200"
           >
-            <div className="px-6 py-4 bg-gradient-to-r from-[#02276B] to-[#161139] flex flex-row items-center justify-between border-b gap-3">
+            <div className="px-6 py-4 bg-gradient-to-r from-[#FF6600] to-[#C49E78] flex flex-row items-center justify-between border-b gap-3">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <img
-                    src="https://placehold.co/600x600?text=SciTech"
+                    src="https://placehold.co/600x600?text=EasyDIY"
                     alt="Virtual Assistant Avatar"
                     className="h-12 w-12 rounded-full border-2 border-white/20"
                   />
@@ -38,9 +39,9 @@ export default function ChatWidget() {
                 </div>
                 <div className="flex flex-col">
                   <h2 className="text-white text-xl font-medium">
-                    SciTech Support
+                    EasyDIY Murphy
                   </h2>
-                  <p className="text-gray-200 text-sm">Admin Support</p>
+                  <p className="text-gray-200 text-sm ">AI Support</p>
                 </div>
               </div>
               <Button
@@ -66,7 +67,7 @@ export default function ChatWidget() {
               </Button>
             </div>
             <div className="flex-1 overflow-hidden h-[calc(100%-76px)]">
-              <ChatInterface inModal={true} />
+              <ChatInterface inModal />
             </div>
           </motion.div>
         )}
