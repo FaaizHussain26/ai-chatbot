@@ -80,7 +80,7 @@ export const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
               href={part}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-black underline break-all"
+              className="text-black hover:text-black underline break-all"
             >
               {part}
             </a>
@@ -97,7 +97,7 @@ export const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-white hover:text-black underline break-all"
+          className="text-black hover:text-black underline break-all"
         >
           {label}
         </a>

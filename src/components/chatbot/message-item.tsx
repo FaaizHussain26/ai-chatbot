@@ -39,9 +39,7 @@ export function MessageItem({
         "flex items-start gap-3 rounded-lg p-4",
         message.role === "user"
           ? "ml-auto max-w-[90%] bg-[#F1F8FA]"
-          : `mr-auto max-w-[100%] ${
-              message.id === "welcome" ? "bg-[#F1F8FA]" : "bg-[#104d96]"
-            }`
+          : `mr-auto max-w-[100%] bg-[#F1F8FA]`
       )}
     >
       <div
@@ -62,9 +60,7 @@ export function MessageItem({
           </div>
         ) : (
           <div
-            className={`text-sm whitespace-pre-wrap ${
-              message.id === "welcome" ? "text-[#104D96]" : "text-white"
-            } mt-[8px]`}
+            className={`text-sm whitespace-pre-wrap text-[#104D96] mt-[8px]`}
           >
             <LinkifyText text={message.content} />
           </div>
