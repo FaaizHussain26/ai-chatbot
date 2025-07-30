@@ -28,6 +28,27 @@ export async function chatApiMiddleware(messages: any) {
   }
 }
 
+export async function fetchChatHistories() {
+  try {
+    const response = await fetch(`${API_URL}/chat/history`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Backend responded with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching chat histories:", error);
+    throw error;
+  }
+}
+
 export async function saveUser(payload: any) {
   try {
     const response = await fetch(`${API_URL}/users`, {

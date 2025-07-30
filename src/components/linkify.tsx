@@ -133,7 +133,9 @@ export const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
   const bulletLines = lines.filter(
     (line) => line.startsWith("- ") && !line.startsWith("- Link:")
   );
-  const nonBulletLines = lines.filter((line) => !line.startsWith("- "));
+  const nonBulletLines = lines.filter(
+    (line) => !line.startsWith("- ") && !line.startsWith("- Link:")
+  );
 
   return (
     <>
