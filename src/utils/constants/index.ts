@@ -21,13 +21,9 @@ const dedent = (strings: TemplateStringsArray, ...values: string[]) => {
 };
 
 export const INITIAL_OPTIONS: ChatOption[] = [
-  { id: "1", text: "I want to build my own space‑saving Murphy bed", value: "build" },
-  { id: "2", text: "Tell me what sizes and orientations are available", value: "sizes" },
-  { id: "3", text: "What tools and materials do I need?", value: "tools" },
-  { id: "4", text: "How do I assemble and install it?", value: "installation" },
-  { id: "5", text: "What warranty and support do you offer?", value: "support" },
-  { id: "6", text: "Can I view video & PDF assembly guides?", value: "guides" },
-  { id: "7", text: "Help me choose the right kit for my needs", value: "consultation" },
+  { id: "1", text: "PreSale Questions", value: "sale" },
+  { id: "2", text: "Technical & Installation Help", value: "sizes" },
+  { id: "3", text: "Order / Shipping Information ", value: "tools" },
 ];
 
 export const INITIAL_MESSAGE: InitialMessage[] = [
@@ -35,12 +31,14 @@ export const INITIAL_MESSAGE: InitialMessage[] = [
     id: "welcome",
     role: "assistant",
     content: dedent`
-      Welcome to Easy DIY Murphy Bed — your destination for premium DIY Murphy bed hardware kits.
+Welcome to Easy DIY Murphy Bed! 
 
-      Our kits are built in the USA, come with lifetime-warranty hardware, and are available in **Twin**, **Full**, **Queen** (and even **California King**) sizes, configurable in both horizontal and vertical orientations. They include a cut‑list guide, printed or PDF instructions, and optional video tutorials.
+Looking to save space and build your own Murphy bed? I can help you: 
+1️⃣ Choose the perfect hardware kit 
+2️⃣ Guide you through construction & installation 
+3️⃣ Answer technical or order questions   
 
-      I’m here to help you choose a kit, understand tools and installation, or access guides. How can I assist you today? (Select an option or ask your own question below.)
-    `,
+`,
     options: INITIAL_OPTIONS,
   }
 ];
