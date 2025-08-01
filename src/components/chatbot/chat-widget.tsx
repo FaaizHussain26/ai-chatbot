@@ -12,7 +12,7 @@ export default function ChatWidget() {
         onClick={() => setIsOpen(!isOpen)}
         size="icon"
         variant="ghost"
-        className="h-14 w-14 rounded-full fixed bottom-6 right-6 shadow-lg z-50 bg-[#FF6600]"
+        className="h-21 w-21 rounded-full fixed bottom-6 right-6 shadow-lg z-50 bg-[#FF6600]"
       >
         <img src="/assets/logo.webp" alt="logo" width={44} height={44} />
       </Button>
@@ -24,7 +24,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 sm:right-8 w-[90vw] sm:w-[400px] md:w-[450px] h-[600px] 
+            className="fixed bottom-27 right-6 sm:right-8 w-[90vw] sm:w-[400px] md:w-[450px] h-[600px] 
                       rounded-lg shadow-xl overflow-hidden z-40 bg-white border border-gray-200"
           >
             <div className="px-6 py-4 bg-gradient-to-r from-[#FF6600] to-[#C49E78] flex flex-row items-center justify-between border-b gap-3">
