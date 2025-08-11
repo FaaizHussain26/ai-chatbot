@@ -14,7 +14,7 @@ export default function ChatWidget() {
         variant="ghost"
         className="h-21 w-21 rounded-full fixed bottom-6 right-6 shadow-lg z-50 bg-[#FF6600]"
       >
-        <img src="/assets/logo.webp" alt="logo" width={44} height={44} />
+        <img src="/assets/logo.webp" alt="logo" width={64} height={54} />
       </Button>
 
       <AnimatePresence>
